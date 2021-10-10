@@ -1,0 +1,13 @@
+[{
+    "id": "E001",
+    "name": "Enji Nier",
+    "department": "Engineering"
+}, {
+    "id": "H002",
+    "name": "H.R. Dee",
+    "department": "HRD"
+}, {
+    "id": "F003",
+    "name": "Cash Cash",
+    "department": "Finance"
+}]
