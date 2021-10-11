@@ -1,13 +1,29 @@
 [{
-    "id": "E001",
-    "name": "Enji Nier",
-    "department": "Engineering"
+  "id": "E001",
+  "name": "Enji Nier",
+  "department": "Engineering"
 }, {
-    "id": "H002",
-    "name": "H.R. Dee",
-    "department": "HRD"
+  "id": "H002",
+  "name": "H.R. Dee",
+  "department": "HRD"
 }, {
-    "id": "F003",
-    "name": "Cash Cash",
-    "department": "Finance"
+  "id": "F003",
+  "name": "Cash Cash",
+  "department": "Finance"
+}, {
+  "id": "H004",
+  "name": "H Ackermann",
+  "department": "Engineering"
+}, {
+  "id": "M005",
+  "name": "Man Nager",
+  "department": "Management"
+}, {
+  "id": "A006",
+  "name": "Add Minister",
+  "department": "Admin"
+}, {
+  "id": "C007",
+  "name": "Chef Kef",
+  "department": "Cooking"
 }]

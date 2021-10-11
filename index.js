@@ -2,6 +2,18 @@ const express = require('express');
 const fs = require('fs');
 const app = express();
 const port = 3000;
+const cors = require('cors');
+
+app.use(cors({
+  origin:'*'
+}));
+
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(express.json())
+
 
 app.get('/api/employees', (req, res) => {  
   
@@ -15,7 +27,7 @@ app.get('/api/employees', (req, res) => {
 
 app.post('/api/employees', (req, res) => {  
 
-  let qs = req.query;
+  let qs = req.body;
   let employee = {
     "id": qs.id,
     "name": qs.name,
@@ -30,7 +42,8 @@ app.post('/api/employees', (req, res) => {
 
     fs.writeFile('employees.json', JSON.stringify(employee_list), (err) => {
       if (err) throw err;
-      res.send('success');
+      res.writeHead(302, {'location': 'http://localhost:4200'});
+      res.end();
     });
   });
 });
@@ -57,6 +70,65 @@ app.get('/api/employees/:id', (req, res) => {
       res.send("Not Found")
     };
 
+  });
+});
+
+app.put('/api/employees/:id', (req, res) => {  
+
+  let qs = req.body;
+  let employee = {
+    "id": qs.id,
+    "name": qs.name,
+    "department": qs.department,
+  };
+  let id;
+
+  fs.readFile('employees.json',(err, data) => {
+    if (err) throw err;
+    let employee_list = JSON.parse(data);
+
+    for(let i = 0; i < employee_list.length; i++) {
+      if (employee_list[i].id == req.params.id) {
+        id = i;
+        break;
+      } else {
+        id = null;
+      };
+
+      employee_list[id]=employee;
+      fs.writeFile('employees.json', JSON.stringify(employee_list), (err) => {
+        if (err) throw err;
+        res.writeHead(302, {'location': 'http://localhost:4200'});
+        res.end();
+      });
+    };
+  });
+});
+
+app.delete('/api/employees/:id', (req, res) => {  
+
+  let id;
+
+  fs.readFile('employees.json',(err, data) => {
+    if (err) throw err;
+    let employee_list = JSON.parse(data);
+
+    for(let i = 0; i < employee_list.length; i++) {
+      if (employee_list[i].id == req.params.id) {
+        id = i;
+        break;
+      } else {
+        id = null;
+      };
+
+      employee_list.splice(id,1);
+
+    fs.writeFile('employees.json', JSON.stringify(employee_list), (err) => {
+      if (err) throw err;
+      res.writeHead(302, {'location': 'http://localhost:4200'});
+      res.end();
+    });
+    };
   });
 });
 
