@@ -86,7 +86,7 @@
           <td>{{employee.name}}</td>
           <td>{{employee.department}}</td>
           <td>
-            <v-btn>
+            <v-btn :to="{ name: 'edit-employee', params: {id: employee.id}}">
               Edit
             </v-btn>
           </td>

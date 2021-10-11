@@ -38,14 +38,12 @@
     <v-btn
       color="blue darken-1"
       text
-      @click="addEmployee"
     >
       Save
     </v-btn>
     <v-btn
       color="red"
       text
-      @click="addEmployee"
     >
       Delete
     </v-btn>
@@ -64,22 +62,17 @@ export default {
         e_dept:''
     }),
     mounted() {
-        fetch("http://localhost:3000/api/employees/")
+        let id = this.$route.params.id
+        fetch("http://localhost:3000/api/employees/"+ id)
         .then(response => response.json())
         .then(result => {
-            this.employee = result;
+            this.employee = result[0];
+            this.e_id = this.employee.id;
+            this.e_name = this.employee.name;
+            this.e_dept = this.employee.department;
         });
     },
     methods: {
-      addEmployee() {
-          let data = {
-              id: this.e_id,
-              name: this.e_name,
-              department: this.e_dept
-          };
-          this.$http.post("http://localhost:3000/api/employees", data)
-          .then(response => window.location(response.data.Location));
-      },
     }
 }
 </script>

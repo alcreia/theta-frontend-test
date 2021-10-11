@@ -53,19 +53,13 @@ app.get('/api/employees/:id', (req, res) => {
   fs.readFile('employees.json',(err, data) => {
     if (err) throw err;
     let employee_list = JSON.parse(data);
-    let id;
 
-    for(let i = 0; i < employee_list.length; i++) {
-      if (employee_list[i].id == req.params.id) {
-        id = i;
-        break;
-      } else {
-        id = null;
-      }
-    }
+    let result = employee_list.filter(emp => {
+      return emp.id === req.params.id
+    });
 
-    if (id) {
-      res.send(employee_list[id]);
+    if (result) {
+      res.send(result);
     } else {
       res.send("Not Found")
     };
