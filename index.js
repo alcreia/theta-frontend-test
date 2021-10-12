@@ -41,7 +41,7 @@ app.get('/api/employees/:id', (req, res) => {
     return emp.id === req.params.id
   });
 
-  if (result) {
+  if (result != []) {
     res.send(result);
   } else {
     res.send("Not Found")
@@ -50,20 +50,15 @@ app.get('/api/employees/:id', (req, res) => {
 });
 
 app.put('/api/employees/:id', (req, res) => {  
-
-  let qs = req.body;
-  let employee = {
-    "id": qs.id,
-    "name": qs.name,
-    "department": qs.department,
-  };
+  let employee = req.body;
   
   let result = employee_list.findIndex(emp => {
     return emp.id === req.params.id
   });
 
-  res.send(employee);
-  res.writeHead(303, {'location': 'http://localhost:4200'});
+  employee_list[result] = employee;
+
+  res.send('Success Edit');
 });
 
 app.delete('/api/employees/:id', (req, res) => {  

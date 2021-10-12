@@ -2,13 +2,11 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
+      color="light-blue lighten-1"
       dark
     >
       <div class="d-flex align-center">
-        <a href="/">
-          <h1>Theta Frontend Test</h1>
-        </a>
+        <h1>Theta Frontend Test</h1>
       </div>
     </v-app-bar>
 
@@ -30,3 +28,10 @@ export default {
   }),
 };
 </script>
+<style>
+a {
+  text-decoration: none;
+  color: aliceblue;
+}
+
+</style>

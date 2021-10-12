@@ -43,13 +43,48 @@
     >
       Save
     </v-btn>
-    <v-btn
-      color="red"
-      text
-      @click="deleteEmployee"
+    <v-dialog
+      max-width="600px"
+      v-model="dialog"
     >
-      Delete
-    </v-btn>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="red"
+          text
+          v-bind="attrs"
+          v-on="on"
+        >
+          Delete
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Delete Employee Data</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <p>Are you sure you want to delete this data?</p>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="dialog = false"
+          >
+            No
+          </v-btn>
+          <v-btn
+            color="blue"
+            @click="deleteEmployee"
+            class="white--text"
+          >
+            Yes
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
           
 </template>
@@ -77,14 +112,17 @@ export default {
     },
     methods: {
       saveEmployee() {
-            let data = {
-                id: this.e_id,
-                name: this.e_name,
-                department: this.e_dept
-            };
-            this.$http.put("http://localhost:3000/api/employees/"+this.$route.params.id, data)
-            .then(response => window.location(response.data.location));
-        },
+        let data = {
+            id: this.e_id,
+            name: this.e_name,
+            department: this.e_dept
+        };
+        this.$http.put("http://localhost:3000/api/employees/"+ this.$route.params.id, data)
+          .then(response => {
+            console.log(response);
+            this.$router.back();
+          });
+      },
       deleteEmployee() {
           this.$http.delete("http://localhost:3000/api/employees/"+ this.$route.params.id)
           .then(response => {
