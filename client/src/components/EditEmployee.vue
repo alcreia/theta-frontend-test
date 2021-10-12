@@ -1,9 +1,10 @@
 <template>
-  <v-container>
-    <h1>Edit Employee Data</h1>
+  <v-container class="px-12 my-4">
+    <h2>Edit Employee Data</h2>
     <v-form 
       ref="form"    
-      @submit.prevent>
+      @submit.prevent
+      class="my-5 px-8">
       <v-row>
         <v-col
           cols="12"
@@ -38,7 +39,7 @@
     </v-form>
     <v-btn
       color="blue darken-1"
-      text
+      class="white--text mx-2"
       @click="saveEmployee"
     >
       Save
@@ -50,9 +51,9 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           color="red"
-          text
           v-bind="attrs"
           v-on="on"
+          class="white--text mx-2"
         >
           Delete
         </v-btn>
@@ -76,7 +77,7 @@
             No
           </v-btn>
           <v-btn
-            color="blue"
+            color="red"
             @click="deleteEmployee"
             class="white--text"
           >
@@ -97,7 +98,8 @@ export default {
         employee: [],
         e_id:'',
         e_name:'',
-        e_dept:''
+        e_dept:'',
+        dialog: false
     }),
     mounted() {
         let id = this.$route.params.id

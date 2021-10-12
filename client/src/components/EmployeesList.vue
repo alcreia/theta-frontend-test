@@ -10,6 +10,7 @@
           dark
           v-bind="attrs"
           v-on="on"
+          class="my-5"
         >
           + Add New
         </v-btn>
@@ -70,7 +71,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-simple-table class="my-2">
+    <v-simple-table class="px-8">
       <thead>
         <tr>
           <th>ID</th>
@@ -87,7 +88,13 @@
           <td>{{employee.name}}</td>
           <td>{{employee.department}}</td>
           <td>
-            <v-btn :to="{ name: 'edit-employee', params: {id: employee.id}}">
+            <v-btn 
+            depressed
+            rounded
+            small
+            color="light-blue darken-2"
+            class="white--text"
+            :to="{ name: 'edit-employee', params: {id: employee.id}}">
               Edit
             </v-btn>
           </td>

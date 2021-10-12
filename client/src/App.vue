@@ -3,10 +3,14 @@
     <v-app-bar
       app
       color="light-blue lighten-1"
-      dark
+      flat
     >
       <div class="d-flex align-center">
-        <h1>Theta Frontend Test</h1>
+        <router-link 
+          to="/" 
+          style="text-decoration: none; color: white; font-weight=700" >
+          Theta Frontend Test
+        </router-link>
       </div>
     </v-app-bar>
 
@@ -28,10 +32,3 @@ export default {
   }),
 };
 </script>
-<style>
-a {
-  text-decoration: none;
-  color: aliceblue;
-}
-
-</style>
