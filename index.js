@@ -8,63 +8,45 @@ app.use(cors({
   origin:'*'
 }));
 
-// parse application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: false }))
-
 // parse application/json
-app.use(express.json())
+app.use(express.json());
+// parse application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }));
 
+let employee_list;
+
+fs.readFile('employees.json',(err, data) => {
+  if (err) throw err;
+  employee_list = JSON.parse(data);
+});
+
+app.listen(port, () => {
+  console.log(`cli-nodejs-api listening at http://localhost:${port}`)
+});
 
 app.get('/api/employees', (req, res) => {  
-  
-  fs.readFile('employees.json',(err, data) => {
-    if (err) throw err;
-    let employee_list = JSON.parse(data);
-
-    res.send(employee_list);
-  });
+  res.send(employee_list);
 });
 
 app.post('/api/employees', (req, res) => {  
-
-  let qs = req.body;
-  let employee = {
-    "id": qs.id,
-    "name": qs.name,
-    "department": qs.department,
-  };
-
-  fs.readFile('employees.json',(err, data) => {
-    if (err) throw err;
-    let employee_list = JSON.parse(data);
-
-    employee_list.push(employee);
-
-    fs.writeFile('employees.json', JSON.stringify(employee_list, null, 2), (err) => {
-      if (err) throw err;
-      res.writeHead(302, {'location': 'http://localhost:4200'});
-      res.end();
-    });
-  });
+  let employee = req.body;
+  employee_list.push(employee);
+  
+  res.send('Success Add');
 });
 
 app.get('/api/employees/:id', (req, res) => {  
-  
-  fs.readFile('employees.json',(err, data) => {
-    if (err) throw err;
-    let employee_list = JSON.parse(data);
-
-    let result = employee_list.filter(emp => {
-      return emp.id === req.params.id
-    });
-
-    if (result) {
-      res.send(result);
-    } else {
-      res.send("Not Found")
-    };
-
+    
+  let result = employee_list.filter(emp => {
+    return emp.id === req.params.id
   });
+
+  if (result) {
+    res.send(result);
+  } else {
+    res.send("Not Found")
+  };
+
 });
 
 app.put('/api/employees/:id', (req, res) => {  
@@ -75,44 +57,21 @@ app.put('/api/employees/:id', (req, res) => {
     "name": qs.name,
     "department": qs.department,
   };
-  let i;
-
-  fs.readFile('employees.json',(err, data) => {
-    if (err) throw err;
-    let employee_list = JSON.parse(data);
-
-    i = employee_list.findIndex(emp => {
-      return emp.id === req.params.id
-    });
-
-    res.send(employee);
-    /*fs.writeFile('employees.json', JSON.stringify(employee_list), (err) => {
-      if (err) throw err;
-    });*/
+  
+  let result = employee_list.findIndex(emp => {
+    return emp.id === req.params.id
   });
-  /*res.writeHead(302, {'location': 'http://localhost:4200'});
-  res.end();*/
+
+  res.send(employee);
+  res.writeHead(303, {'location': 'http://localhost:4200'});
 });
 
 app.delete('/api/employees/:id', (req, res) => {  
 
-  fs.readFile('employees.json',(err, data) => {
-    if (err) throw err;
-    let employee_list = JSON.parse(data);
-
-    for(let i = 0; i < employee_list.length; i++) {
-      if (employee_list[i].id == req.params.id) {
-        employee_list.splice(i,1);
-      };  
-    };
-    fs.writeFile('employees.json', JSON.stringify(employee_list, null, 2), (err) => {
-      if (err) throw err;
-    });
-  });
-  res.writeHead(302, {'location': 'http://localhost:4200'});
-  res.end();
-});
-
-app.listen(port, () => {
-  console.log(`cli-nodejs-api listening at http://localhost:${port}`)
+  for(let i = 0; i < employee_list.length; i++) {
+    if (employee_list[i].id == req.params.id) {
+      employee_list.splice(i,1);
+    };  
+  };
+  res.send("success");
 });

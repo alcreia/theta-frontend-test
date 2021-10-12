@@ -39,12 +39,14 @@
     <v-btn
       color="blue darken-1"
       text
+      @click="saveEmployee"
     >
       Save
     </v-btn>
     <v-btn
       color="red"
       text
+      @click="deleteEmployee"
     >
       Delete
     </v-btn>
@@ -74,6 +76,22 @@ export default {
         });
     },
     methods: {
+      saveEmployee() {
+            let data = {
+                id: this.e_id,
+                name: this.e_name,
+                department: this.e_dept
+            };
+            this.$http.put("http://localhost:3000/api/employees/"+this.$route.params.id, data)
+            .then(response => window.location(response.data.location));
+        },
+      deleteEmployee() {
+          this.$http.delete("http://localhost:3000/api/employees/"+ this.$route.params.id)
+          .then(response => {
+            console.log(response);
+            this.$router.back();
+          });
+      },
     }
 }
 </script>

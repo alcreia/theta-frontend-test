@@ -15,7 +15,7 @@
     "department": "Finance"
   },
   {
-    "id": "H004",
+    "id": "E004",
     "name": "H Ackermann",
     "department": "Engineering"
   },
@@ -23,5 +23,10 @@
     "id": "M005",
     "name": "Man Nager",
     "department": "Management"
+  },
+  {
+    "id": "B009",
+    "name": "Big Man Tyrone",
+    "department": "Boss"
   }
 ]

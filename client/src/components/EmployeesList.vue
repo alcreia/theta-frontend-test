@@ -70,7 +70,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-simple-table>
+    <v-simple-table class="my-2">
       <thead>
         <tr>
           <th>ID</th>
@@ -122,7 +122,10 @@ export default {
                 department: this.e_dept
             };
             this.$http.post("http://localhost:3000/api/employees", data)
-            .then(response => window.location(response.data.Location));
+            .then(response => {
+              console.log(response);
+              this.$router.go(0);
+            });
         },
     }
 }
